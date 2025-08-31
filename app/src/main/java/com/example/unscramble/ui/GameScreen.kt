@@ -16,6 +16,7 @@
 package com.example.unscramble.ui
 
 import android.app.Activity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,6 +45,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -83,10 +85,11 @@ fun GameScreen(
         )
         GameLayout(
             onUserGuessChanged = { gameViewModel.updateUserGuess(it) },
-            isGuessWrong = gameUiState.isGuessedWordWrong,
+            wordCount = gameUiState.currentWordCount,
             userGuess = gameViewModel.userGuess,
             onKeyboardDone = { gameViewModel.checkUserGuess() },
             currentScrambledWord = gameUiState.currentScrambledWord,
+            isGuessWrong = gameUiState.isGuessedWordWrong,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -112,7 +115,7 @@ fun GameScreen(
             }
 
             OutlinedButton(
-                onClick = { },
+                onClick = { gameViewModel.skipWord() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -122,7 +125,7 @@ fun GameScreen(
             }
         }
 
-        GameStatus(score = 0, modifier = Modifier.padding(20.dp))
+        GameStatus(score = gameUiState.score, modifier = Modifier.padding(20.dp))
     }
 }
 
@@ -146,6 +149,7 @@ fun GameStatus(score: Int, modifier: Modifier = Modifier) {
 @Composable
 fun GameLayout(
     currentScrambledWord: String,
+    wordCount: Int,
     isGuessWrong: Boolean,
     userGuess: String,
     onUserGuessChanged: (String) -> Unit,
@@ -166,9 +170,18 @@ fun GameLayout(
             horizontalAlignment = Alignment.CenterHorizontally // This will center all children
         ) {
             Text(
+                modifier = Modifier
+                    .clip(shapes.medium)
+                    .background(colorScheme.surfaceTint)
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                    .align(alignment = Alignment.End),
+                text = stringResource(R.string.word_count, wordCount),
+                style = typography.titleMedium,
+                color = colorScheme.onPrimary
+            )
+            Text(
                 text = currentScrambledWord,
-                fontSize = 45.sp,
-                //modifier = modifier.align(Alignment.CenterHorizontally)
+                style = typography.displayMedium
             )
             Text(
                 text = stringResource(R.string.instructions),
