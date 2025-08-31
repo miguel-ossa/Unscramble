@@ -22,12 +22,12 @@ plugins {
 
 android {
     namespace = "com.example.unscramble"
-    compileSdk = 36  // Actualizado de 35 a 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.unscramble"
         minSdk = 24
-        targetSdk = 36  // Actualizado de 35 a 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -64,15 +64,17 @@ android {
 }
 
 dependencies {
-    implementation(platform("androidx.compose:compose-bom:2025.08.01"))  // Actualizado
-    implementation("androidx.activity:activity-compose:1.10.1")  // Actualizado
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    implementation("androidx.activity:activity-compose:1.9.3")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.core:core-ktx:1.17.0")  // Actualizado
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.3")  // Actualizado
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.3")  // Actualizado
+    implementation("androidx.core:core-ktx:1.15.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.compose.foundation:foundation-layout:1.9.0")
 
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     debugImplementation("androidx.compose.ui:ui-tooling")
